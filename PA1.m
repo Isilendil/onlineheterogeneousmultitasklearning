@@ -1,4 +1,4 @@
-function [classifier, err_count, run_time, mistakes, mistakes_idx, SVs, TMs] = PA1(Y, Kernel, options, id_list)
+function [classifier, err_count, run_time, mistakes] = PA1(Y, Kernel, options, id_list)
 % PA1: online passive-aggressive algorithm
 %--------------------------------------------------------------------------
 % Input:
@@ -10,10 +10,7 @@ function [classifier, err_count, run_time, mistakes, mistakes_idx, SVs, TMs] = P
 %   err_count:  total number of training errors
 %    run_time:  time consumed by this algorithm once
 %    mistakes:  a vector of mistake rate
-% mistake_idx:  a vector of number, in which every number corresponds to a
 %               mistake rate in the vector above
-%         SVs:  a vector records the number of support vectors
-%     size_SV:  the size of final support set
 %--------------------------------------------------------------------------
 
 %% initialize parameters
@@ -24,9 +21,6 @@ SV = [];
 ID = id_list;
 err_count = 0;
 mistakes = [];
-mistakes_idx = [];
-SVs = [];
-TMs=[];
 
 t_tick = T_TICK; %10;
 %% loop
@@ -34,7 +28,6 @@ tic
 for t = 1:length(ID),
     id = ID(t);
     
-    id = id-options.Number_old;
     if (isempty(alpha)), % init stage
         f_t = 0;
     else
@@ -63,9 +56,6 @@ for t = 1:length(ID),
     if t<T_TICK
         if (t==t_tick)
             mistakes = [mistakes err_count/t];
-            mistakes_idx = [mistakes_idx t];
-            SVs = [SVs length(SV)];
-            TMs=[TMs run_time];
             
             t_tick=2*t_tick;
             if t_tick>=T_TICK,
@@ -75,9 +65,6 @@ for t = 1:length(ID),
     else
         if (mod(t,t_tick)==0)
             mistakes = [mistakes err_count/t];
-            mistakes_idx = [mistakes_idx t];
-            SVs = [SVs length(SV)];
-            TMs=[TMs run_time];
         end
     end
     
