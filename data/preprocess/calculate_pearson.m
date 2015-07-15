@@ -99,7 +99,7 @@ function calculate_pearson( data_file, affinity_file)
 		%why not use gaussian kernel function?
     P_ti = ctt_sim'*cii_sim;
     ctt = ctt_sim;
-    cii = ctt_sim;
+    cii = cii_sim;
     save( affinity_file, 'P_tt', 'P_ii', 'P_ti', 'ctt', 'cii');
 end
 
