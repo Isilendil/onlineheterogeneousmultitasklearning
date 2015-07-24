@@ -42,7 +42,7 @@ text_X = [text_X; co_text_fea];
 
 % set parameters
 options.C = 5;
-options.sigma = 4;
+options.sigma = 1;
 options.sigma2 = 8;
 options.t_tick = round(size(ID,2)/10);
 options.K = 10;
@@ -184,6 +184,18 @@ for i=1:size(ID,1),
 		time_HetOTL_shared_text(i) = run_time;
 		mistakes_list_HetOTL_shared_text(i,:) = mistakes_2;
 
+    %10. PA1 feature
+		[classifier, err_count, run_time, mistakes] = PA1_fea(image_Y, text_kernel, cii', options, id_list);
+		err_PA1_fea_image(i) = err_count;
+		time_PA1_fea_image(i) = run_time;
+		mistakes_list_PA1_fea_image(i,:) = mistakes;
+
+		[classifier, err_count, run_time, mistakes] = PA1_fea(text_Y, image_kernel, ctt', options, id_list);
+		err_PA1_fea_text(i) = err_count;
+		time_PA1_fea_text(i) = run_time;
+		mistakes_list_PA1_fea_text(i,:) = mistakes;
+
+
 		%7. domain-specific (2) + latent + optimization
 		%[classifier_image, err_count_image, mistakes_image, classifier_text, err_count_text, mistakes_text, run_time] = dslo2(image_Y, image_kernel, text_Y, text_kernel, options, id_list);
     %err_dslo2_image(i) = err_count_image;
@@ -207,7 +219,7 @@ end
 
 
 stat_file = sprintf('../stat/%s/%d-stat', similarity_method, data_file);
-save(stat_file, 'err_PA1_personal_image', 'time_PA1_personal_image', 'mistakes_list_PA1_personal_image', 'err_PA1_personal_text', 'time_PA1_personal_text', 'mistakes_list_PA1_personal_text', 'err_OGD_personal_image', 'time_OGD_personal_image', 'mistakes_list_OGD_personal_image', 'err_OGD_personal_text', 'time_OGD_personal_text', 'mistakes_list_OGD_personal_text', 'err_PA1_shared_image', 'mistakes_list_PA1_shared_image', 'err_PA1_shared_text', 'mistakes_list_PA1_shared_text', 'time_PA1_shared', 'err_dso1_image', 'mistakes_list_dso1_image', 'err_dso1_text', 'time_dso1', 'mistakes_list_dso1_text', 'err_PA1_extra_image', 'mistakes_list_PA1_extra_image', 'err_PA1_extra_text', 'time_PA1_extra', 'mistakes_list_PA1_extra_text', 'err_PA1_extra_sim_image', 'mistakes_list_PA1_extra_sim_image', 'err_PA1_extra_sim_text', 'mistakes_list_PA1_extra_sim_text', 'time_PA1_extra_sim', 'err_HetOTL_image', 'time_HetOTL_image', 'mistakes_list_HetOTL_image', 'err_HetOTL_text', 'time_HetOTL_text', 'mistakes_list_HetOTL_text', 'err_HetOTL_shared_image', 'time_HetOTL_shared_image', 'mistakes_list_HetOTL_shared_image', 'err_HetOTL_shared_text', 'time_HetOTL_shared_text', 'mistakes_list_HetOTL_shared_text');
+save(stat_file, 'err_PA1_personal_image', 'time_PA1_personal_image', 'mistakes_list_PA1_personal_image', 'err_PA1_personal_text', 'time_PA1_personal_text', 'mistakes_list_PA1_personal_text', 'err_OGD_personal_image', 'time_OGD_personal_image', 'mistakes_list_OGD_personal_image', 'err_OGD_personal_text', 'time_OGD_personal_text', 'mistakes_list_OGD_personal_text', 'err_PA1_shared_image', 'mistakes_list_PA1_shared_image', 'err_PA1_shared_text', 'mistakes_list_PA1_shared_text', 'time_PA1_shared', 'err_dso1_image', 'mistakes_list_dso1_image', 'err_dso1_text', 'time_dso1', 'mistakes_list_dso1_text', 'err_PA1_extra_image', 'mistakes_list_PA1_extra_image', 'err_PA1_extra_text', 'time_PA1_extra', 'mistakes_list_PA1_extra_text', 'err_PA1_extra_sim_image', 'mistakes_list_PA1_extra_sim_image', 'err_PA1_extra_sim_text', 'mistakes_list_PA1_extra_sim_text', 'time_PA1_extra_sim', 'err_HetOTL_image', 'time_HetOTL_image', 'mistakes_list_HetOTL_image', 'err_HetOTL_text', 'time_HetOTL_text', 'mistakes_list_HetOTL_text', 'err_HetOTL_shared_image', 'time_HetOTL_shared_image', 'mistakes_list_HetOTL_shared_image', 'err_HetOTL_shared_text', 'time_HetOTL_shared_text', 'mistakes_list_HetOTL_shared_text', 'err_PA1_fea_image', 'time_PA1_fea_image', 'mistakes_list_PA1_fea_image', 'err_PA1_fea_text', 'time_PA1_fea_text', 'mistakes_list_PA1_fea_text');
 
 fprintf(1,'-------------------------------------------------------------------------------\n');
 fprintf(1,'                  number of mistakes,        cpu running time\n');
@@ -227,6 +239,8 @@ fprintf(1,'HetOTL_image \t %.4f %.4f \t %.4f %.4f\n', mean(err_HetOTL_image)/m*1
 fprintf(1,'HetOTL_text \t %.4f %.4f \t %.4f %.4f\n', mean(err_HetOTL_text)/m*100,  std(err_HetOTL_text)/m*100, mean(time_HetOTL_text)/m*100, std(time_HetOTL_text));
 fprintf(1,'HetOTL_shared_image \t %.4f %.4f \t %.4f %.4f\n', mean(err_HetOTL_shared_image)/m*100,  std(err_HetOTL_shared_image)/m*100, mean(time_HetOTL_shared_image)/m*100, std(time_HetOTL_shared_image));
 fprintf(1,'HetOTL_shared_text \t %.4f %.4f \t %.4f %.4f\n', mean(err_HetOTL_shared_text)/m*100,  std(err_HetOTL_shared_text)/m*100, mean(time_HetOTL_shared_text)/m*100, std(time_HetOTL_shared_text));
+fprintf(1,'PA1_fea_image \t %.4f %.4f \t %.4f %.4f\n', mean(err_PA1_fea_image)/m*100,  std(err_PA1_fea_image)/m*100, mean(time_PA1_fea_image)/m*100, std(time_PA1_fea_image));
+fprintf(1,'PA1_fea_text \t %.4f %.4f \t %.4f %.4f\n', mean(err_PA1_fea_text)/m*100,  std(err_PA1_fea_text)/m*100, mean(time_PA1_fea_text)/m*100, std(time_PA1_fea_text));
 %fprintf(1,'dso2_image \t %.4f %.4f \t %.4f %.4f\n', mean(err_dso2_image)/m*100,  std(err_dso2_image)/m*100, mean(time_dso2_image)/m*100, std(time_dso2_image));
 %fprintf(1,'dso2_text \t %.4f %.4f \t %.4f %.4f\n', mean(err_dso2_text)/m*100,  std(err_dso2_text)/m*100, mean(time_dso2_text)/m*100, std(time_dso2_text));
 %fprintf(1,'lo_image \t %.4f %.4f \t %.4f %.4f\n', mean(err_lo_image)/m*100,  std(err_lo_image)/m*100, mean(time_lo_image)/m*100, std(time_lo_image));

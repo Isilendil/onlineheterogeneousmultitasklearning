@@ -5,7 +5,7 @@ function calculate_pearson( data_file, affinity_file)
 %           data_file       - data file name
 %           affinity_file   - affinity file name
 
-data_file = '../original/EN-CH-FR';
+data_file = '../original/en-ch';
 affinity_file = '../similarity/pearson/en-ch';
 
  disp('Calculating affinity matrix...');
