@@ -84,7 +84,7 @@ text_X = bsxfun(@minus, text_X, MinX);
 text_X = bsxfun(@rdivide, text_X , DifX_2);
 
 %============================================
-vector_S = 2 .^ [-10, 10];
+vector_S = 2 .^ [-10:10];
 %============================================
 
 for iter = 1 : length(vector_S)

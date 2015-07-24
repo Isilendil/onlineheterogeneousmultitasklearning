@@ -95,7 +95,7 @@ text_kernel = exp(-(repmat(P',text_n,1) + repmat(P,1,text_n)- 2*text_X*text_X')/
 %text_kernel = text_X * text_X';
 
 %============================================
-vector_C = 2 .^ [-10, 10];
+vector_C = 2 .^ [-10:10];
 %============================================
 
 for iter = 1 : length(vector_C)
