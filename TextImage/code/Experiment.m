@@ -145,6 +145,22 @@ for i=1:size(ID,1),
     mistakes_list_PA1_extra_sim_text(i,:) = mistakes_text;
     time_PA1_extra_sim(i) = run_time;
 		
+		%4. PA1_extra_self
+		[classifier_image, err_count_image, mistakes_image, classifier_text, err_count_text, mistakes_text, run_time] = PA1_extra_self(image_kernel, image_Y, cii', text_kernel, text_Y, ctt', options, id_list);
+    err_PA1_extra_self_image(i) = err_count_image;
+    mistakes_list_PA1_extra_self_image(i,:) = mistakes_image;
+    err_PA1_extra_self_text(i) = err_count_text;
+    mistakes_list_PA1_extra_self_text(i,:) = mistakes_text;
+    time_PA1_extra_self(i) = run_time;
+
+		%5. PA1_extra_sim_self
+		[classifier_image, err_count_image, mistakes_image, classifier_text, err_count_text, mistakes_text, run_time] = PA1_extra_sim_self(image_kernel, image_Y, cii', text_kernel, text_Y, ctt', options, id_list);
+    err_PA1_extra_sim_self_image(i) = err_count_image;
+    mistakes_list_PA1_extra_sim_self_image(i,:) = mistakes_image;
+    err_PA1_extra_sim_self_text(i) = err_count_text;
+    mistakes_list_PA1_extra_sim_self_text(i,:) = mistakes_text;
+    time_PA1_extra_sim_self(i) = run_time;
+		
 		%6. latent + optimization
 		%[classifier_image, err_count_image, mistakes_image, classifier_text, err_count_text, mistakes_text, run_time] = lo(image_Y, image_kernel, text_Y, text_kernel, options, id_list);
     %err_lo_image(i) = err_count_image;
@@ -233,6 +249,10 @@ fprintf(1,'PA1_extra_image \t %.4f %.4f \t %.4f %.4f\n', mean(err_PA1_extra_imag
 fprintf(1,'PA1_extra_text \t %.4f %.4f \t %.4f %.4f\n', mean(err_PA1_extra_text)/m*100,  std(err_PA1_extra_text)/m*100, mean(time_PA1_extra)/m*100, std(time_PA1_extra));
 fprintf(1,'PA1_extra_sim_image \t %.4f %.4f \t %.4f %.4f\n', mean(err_PA1_extra_sim_image)/m*100,  std(err_PA1_extra_sim_image)/m*100, mean(time_PA1_extra_sim)/m*100, std(time_PA1_extra_sim));
 fprintf(1,'PA1_extra_sim_text \t %.4f %.4f \t %.4f %.4f\n', mean(err_PA1_extra_sim_text)/m*100,  std(err_PA1_extra_sim_text)/m*100, mean(time_PA1_extra_sim)/m*100, std(time_PA1_extra_sim));
+fprintf(1,'PA1_extra_self_image \t %.4f %.4f \t %.4f %.4f\n', mean(err_PA1_extra_self_image)/m*100,  std(err_PA1_extra_self_image)/m*100, mean(time_PA1_extra_self)/m*100, std(time_PA1_extra_self));
+fprintf(1,'PA1_extra_self_text \t %.4f %.4f \t %.4f %.4f\n', mean(err_PA1_extra_self_text)/m*100,  std(err_PA1_extra_self_text)/m*100, mean(time_PA1_extra_self)/m*100, std(time_PA1_extra_self));
+fprintf(1,'PA1_extra_sim_self_image \t %.4f %.4f \t %.4f %.4f\n', mean(err_PA1_extra_sim_self_image)/m*100,  std(err_PA1_extra_sim_self_image)/m*100, mean(time_PA1_extra_sim_self)/m*100, std(time_PA1_extra_sim_self));
+fprintf(1,'PA1_extra_sim_self_text \t %.4f %.4f \t %.4f %.4f\n', mean(err_PA1_extra_sim_self_text)/m*100,  std(err_PA1_extra_sim_self_text)/m*100, mean(time_PA1_extra_sim_self)/m*100, std(time_PA1_extra_sim_self));
 fprintf(1,'OGD_personal_image \t %.4f %.4f \t %.4f %.4f\n', mean(err_OGD_personal_image)/m*100,  std(err_OGD_personal_image)/m*100, mean(time_OGD_personal_image)/m*100, std(time_OGD_personal_image));
 fprintf(1,'OGD_personal_text \t %.4f %.4f \t %.4f %.4f\n', mean(err_OGD_personal_text)/m*100,  std(err_OGD_personal_text)/m*100, mean(time_OGD_personal_text)/m*100, std(time_OGD_personal_text));
 fprintf(1,'HetOTL_image \t %.4f %.4f \t %.4f %.4f\n', mean(err_HetOTL_image)/m*100,  std(err_HetOTL_image)/m*100, mean(time_HetOTL_image)/m*100, std(time_HetOTL_image));
