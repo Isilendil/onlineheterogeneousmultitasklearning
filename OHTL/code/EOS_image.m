@@ -1,4 +1,4 @@
-function  EOC(data_file)
+function  EOS_image(data_file)
 % Experiment: the main function used to compare all the online
 % algorithms
 %--------------------------------------------------------------------------
@@ -41,8 +41,8 @@ text_X = [text_X; co_text_fea];
 [text_n, text_d] = size(text_X);
 
 % set parameters
-%options.C = 5;
-options.sigma_image = 4;
+options.C = 5;
+%options.sigma_image = 4;
 options.sigma_text = 4;
 options.t_tick = round(size(ID,2)/10);
 %options.K = 10;
@@ -81,6 +81,11 @@ DifX_2(idx_DifNonZero,:)=DifX(idx_DifNonZero,:);
 text_X = bsxfun(@minus, text_X, MinX);
 text_X = bsxfun(@rdivide, text_X , DifX_2);
 
+vector_S_image = 2 .^ [-10:10];
+
+for iter = 1 : length(vector_S_image)
+	options.sigma_image = vector_S_image(iter);
+
 
 % kernel
 P = sum(image_X.*image_X,2);
@@ -91,11 +96,6 @@ P = full(P);
 text_kernel = exp(-(repmat(P',text_n,1) + repmat(P,1,text_n)- 2*text_X*text_X')/(2*options.sigma_text^2));
 %image_kernel = image_X * image_X';
 %text_kernel = text_X * text_X';
-
-vector_C = 2 .^ [-10:10];
-
-for iter = 1 : length(vector_C)
-	options.C = vector_C(iter);
 
 %% run experiments:
 for i=1:size(ID,1),
@@ -168,7 +168,7 @@ for i=1:size(ID,1),
 end
 
 
-stat_file = sprintf('../stat/eoc/%d/%d-stat', iter, data_file);
+stat_file = sprintf('../stat/eos_image/%d/%d-stat', iter, data_file);
 save(stat_file, 'err_PA1', 'err_PA1_shared', 'err_dso', 'err_HetOTL', 'err_HetOTL_shared', 'err_PA1_fea', 'time_PA1', 'time_PA1_shared', 'time_dso', 'time_HetOTL', 'time_HetOTL_shared', 'time_PA1_fea', 'mistakes_list_PA1', 'mistakes_list_PA1_shared', 'mistakes_list_dso', 'mistakes_list_HetOTL', 'mistakes_list_HetOTL_shared', 'mistakes_list_PA1_fea', 'nSV_PA1', 'nSV_PA1_shared', 'nSV_dso', 'nSV_HetOTL', 'nSV_HetOTL_shared', 'nSV_PA1_fea', 'SVs_PA1', 'SVs_PA1_shared', 'SVs_dso', 'SVs_HetOTL', 'SVs_HetOTL_shared', 'SVs_PA1_fea', 'TMs_PA1', 'TMs_PA1_shared', 'TMs_dso', 'TMs_HetOTL', 'TMs_HetOTL_shared', 'TMs_PA1_fea');
 
 

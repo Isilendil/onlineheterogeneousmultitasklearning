@@ -1,4 +1,4 @@
-function  EOS(data_file)
+function  EOC_bak(data_file)
 % Experiment: the main function used to compare all the online
 % algorithms
 %--------------------------------------------------------------------------
@@ -20,9 +20,9 @@ function  EOS(data_file)
 
 %load dataset
 similarity_method = 'pearson';
-load(sprintf('../data/original/%d', data_file));
-load('../data/ID');
-load(sprintf('../data/similarity/%s/%d', similarity_method, data_file));
+load(sprintf('../../TextImage/data/original/%d', data_file));
+load('../../TextImage/data/ID');
+load(sprintf('../../TextImage/data/similarity/%s/%d', similarity_method, data_file));
 
 m = size(ID, 2);
 
@@ -83,13 +83,6 @@ DifX_2(idx_DifNonZero,:)=DifX(idx_DifNonZero,:);
 text_X = bsxfun(@minus, text_X, MinX);
 text_X = bsxfun(@rdivide, text_X , DifX_2);
 
-%============================================
-vector_S = 2 .^ [-10:10];
-%============================================
-
-for iter = 1 : length(vector_S)
-	options.sigma = vector_S(iter);
-
 
 % kernel
 P = sum(image_X.*image_X,2);
@@ -100,6 +93,13 @@ P = full(P);
 text_kernel = exp(-(repmat(P',text_n,1) + repmat(P,1,text_n)- 2*text_X*text_X')/(2*options.sigma^2));
 %image_kernel = image_X * image_X';
 %text_kernel = text_X * text_X';
+
+%============================================
+vector_C = 2 .^ [-10:10];
+%============================================
+
+for iter = 1 : length(vector_C)
+	options.C = vector_C(iter);
 
 %% run experiments:
 for i=1:size(ID,1),
@@ -226,7 +226,7 @@ for i=1:size(ID,1),
 end
 
 
-stat_file = sprintf('../stat/eos/%d/%d-stat', iter, data_file);
+stat_file = sprintf('../stat/eoc/%d/%d-stat', iter, data_file);
 
 save(stat_file, 'err_PA1_personal_image', 'time_PA1_personal_image', 'mistakes_list_PA1_personal_image', 'err_PA1_personal_text', 'time_PA1_personal_text', 'mistakes_list_PA1_personal_text', 'err_OGD_personal_image', 'time_OGD_personal_image', 'mistakes_list_OGD_personal_image', 'err_OGD_personal_text', 'time_OGD_personal_text', 'mistakes_list_OGD_personal_text', 'err_PA1_shared_image', 'mistakes_list_PA1_shared_image', 'err_PA1_shared_text', 'mistakes_list_PA1_shared_text', 'time_PA1_shared', 'err_dso1_image', 'mistakes_list_dso1_image', 'err_dso1_text', 'time_dso1', 'mistakes_list_dso1_text', 'err_PA1_extra_image', 'mistakes_list_PA1_extra_image', 'err_PA1_extra_text', 'time_PA1_extra', 'mistakes_list_PA1_extra_text', 'err_PA1_extra_sim_image', 'mistakes_list_PA1_extra_sim_image', 'err_PA1_extra_sim_text', 'mistakes_list_PA1_extra_sim_text', 'time_PA1_extra_sim', 'err_HetOTL_image', 'time_HetOTL_image', 'mistakes_list_HetOTL_image', 'err_HetOTL_text', 'time_HetOTL_text', 'mistakes_list_HetOTL_text', 'err_HetOTL_shared_image', 'time_HetOTL_shared_image', 'mistakes_list_HetOTL_shared_image', 'err_HetOTL_shared_text', 'time_HetOTL_shared_text', 'mistakes_list_HetOTL_shared_text', 'err_PA1_fea_image', 'time_PA1_fea_image', 'mistakes_list_PA1_fea_image', 'err_PA1_fea_text', 'time_PA1_fea_text', 'mistakes_list_PA1_fea_text');
 

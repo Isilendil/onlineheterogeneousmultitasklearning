@@ -1,8 +1,8 @@
 
 similarity_method = 'pearson';
 
-for i = 1 : 45 
+for i = 1 : 45
 
-  EOS(i);
+  EOS_image(i);
 
 end
