@@ -1,16 +1,14 @@
-fprintf(1, 'So dangerous!');
 
-%{
-for iter = 1 : 4
+for iter = 1 : 45
 
-load(sprintf('../otl/original/%d', iter));
+load(sprintf('../../TextImage/data/original/%d', iter));
 
-A = X_target;
+A = image_fea;
 
-B1 = co_X_target;
-B2 = co_X_source;
+B1 = co_image_fea;
+B2 = co_text_fea;
 
-C = X_source;
+C = text_fea;
 
 NB1 = sum(abs(B1),2);
 B1 = B1 ./ repmat(NB1,[1 size(B1,2)]);
@@ -47,12 +45,11 @@ model = glm(Xs,Ws,params);
 U = model{4};
 simU = A*U;
 
-X_target_HTLIC = simU;
+image_fea_HTLIC = simU;
 
 
-%save(sprintf('%s-1', data_file), 'X_target', 'image_gnd', 'X_source', 'text_gnd', 'co_X_target', 'co_X_source', 'X_target_1');
+%save(sprintf('%s-1', data_file), 'image_fea', 'image_gnd', 'text_fea', 'text_gnd', 'co_image_fea', 'co_text_fea', 'image_fea_1');
 
-save(sprintf('../otl/feature_HTLIC/%d', iter), 'X_target_HTLIC');
+save(sprintf('../../TextImage/data/feature_HTLIC/%d', iter), 'image_fea_HTLIC');
 
 end
-%}
