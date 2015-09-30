@@ -1,5 +1,5 @@
 
-select = 4;
+select = 1;
 
 switch select
 	case 1
@@ -27,17 +27,20 @@ X_target = X(ID_target, d_source+1:end);
 X_source = X(ID_source, 1:d_source);
 X_codata = X(ID_codata, :);
 
+co_X_target = X_codata(:, d_source+1:end);
+co_X_source = X_codata(:, 1:d_source);
+
 Y_target = Y(ID_target);
 Y_source = Y(ID_source);
 Y_codata = Y(ID_codata);
 
 switch select
 	case 1
-    save('../original/1', 'X_target', 'X_source', 'X_codata', 'Y_target', 'Y_source', 'Y_codata');
+    save('../original/1', 'X_target', 'X_source', 'X_codata', 'Y_target', 'Y_source', 'Y_codata', 'co_X_target', 'co_X_source');
 	case 2
-    save('../original/2', 'X_target', 'X_source', 'X_codata', 'Y_target', 'Y_source', 'Y_codata');
+    save('../original/2', 'X_target', 'X_source', 'X_codata', 'Y_target', 'Y_source', 'Y_codata', 'co_X_target', 'co_X_source');
 	case 3
-    save('../original/3', 'X_target', 'X_source', 'X_codata', 'Y_target', 'Y_source', 'Y_codata');
+    save('../original/3', 'X_target', 'X_source', 'X_codata', 'Y_target', 'Y_source', 'Y_codata', 'co_X_target', 'co_X_source');
 	case 4
-    save('../original/4', 'X_target', 'X_source', 'X_codata', 'Y_target', 'Y_source', 'Y_codata');
+    save('../original/4', 'X_target', 'X_source', 'X_codata', 'Y_target', 'Y_source', 'Y_codata', 'co_X_target', 'co_X_source');
 end
