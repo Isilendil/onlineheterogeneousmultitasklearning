@@ -2,7 +2,7 @@
 for iter = 1 : 4
 
 load(sprintf('../../otl/original/%d', iter));
-load(sprintf('../../otl/similarity/%d', iter));
+load(sprintf('../../otl/similarity/cosin/%d', iter));
 
 n = size(X_target, 1);
 d = size(X_source, 2);

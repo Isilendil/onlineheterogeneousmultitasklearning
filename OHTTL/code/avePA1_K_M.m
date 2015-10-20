@@ -72,5 +72,5 @@ for t = 1:length(ID),
 end
 classifier.SV = SV;
 classifier.alpha = ave_alpha;
-fprintf(1,'The number of mistakes = %d\n', err_count);
+%fprintf(1,'The number of mistakes = %d\n', err_count);
 run_time = toc;
